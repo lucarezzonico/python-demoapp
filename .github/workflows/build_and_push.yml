@@ -20,9 +20,9 @@ jobs:
     
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GH_USERNAME }} -p ${{ secrets.GH_TOKEN }}
-      # Build the Docker image
+
       - name: Build Docker image
         run: docker build . -f build/Dockerfile -t ghcr.io/$IMAGE_NAME:$IMAGE_TAG
-      # Push Docker image to GitHub Container Registry
+
       - name: Push Docker image to GitHub Container Registry
         run: docker push ghcr.io/$IMAGE_NAME:$IMAGE_TAG
