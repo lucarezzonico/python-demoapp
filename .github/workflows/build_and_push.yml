@@ -3,6 +3,8 @@ name: Build and Push
 env:
   IMAGE_NAME: lucarezzonico/python-demoapp
   IMAGE_TAG: v1.0
+  GHCR_REPOSITORY: lucarezzonico/python-demoapp
+  GITHUB_REPOSITORY: lucarezzonico/python-demoapp
 
 on:
   push:
@@ -26,3 +28,7 @@ jobs:
 
       - name: Push Docker image to GitHub Container Registry
         run: docker push ghcr.io/$IMAGE_NAME:$IMAGE_TAG
+
+      - name: Create and link container package
+        run: gh container package create ghcr.io/$GHCR_REPOSITORY:$IMAGE_TAG -R ${GITHUB_REPOSITORY}
+
