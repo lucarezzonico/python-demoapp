@@ -11,15 +11,18 @@ on:
     branches: [master_luca]
 
 jobs:
-  steps:
-    - name: 'Checkout code'
-      uses: actions/checkout@v2
-  
-    - name: 'Login to GitHub Container Registry'
-      run: echo "$GH_TOKEN" | docker login ghcr.io -u $GH_USERNAME -p $GH_PASSWORD
-  
-    - name: 'Build the Docker image'
-      run: docker build . -f build/Dockerfile -t ghcr.io/$IMAGE_NAME:$IMAGE_TAG
-  
-    - name: 'Push Docker image to GitHub Container Registry'
-      run: docker push ghcr.io/$IMAGE_NAME:$IMAGE_TAG
+  build-and-push:
+    name: Build and Push Docker Image to GitHub Container Registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+    
+      - name: Login to GitHub Container Registry
+        run: echo "$GH_TOKEN" | docker login ghcr.io -u $GH_USERNAME -p $GH_PASSWORD
+    
+      - name: Build the Docker image
+        run: docker build . -f build/Dockerfile -t ghcr.io/$IMAGE_NAME:$IMAGE_TAG
+    
+      - name: Push Docker image to GitHub Container Registry
+        run: docker push ghcr.io/$IMAGE_NAME:$IMAGE_TAG
