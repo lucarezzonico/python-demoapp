@@ -28,7 +28,4 @@ jobs:
 
       - name: Push Docker image to GitHub Container Registry
         run: docker push ghcr.io/$IMAGE_NAME:$IMAGE_TAG
-
-      - name: Create and Link Container Package to GitHub Repository
-        run: gh container package create ghcr.io/$GHCR_REPOSITORY:$IMAGE_TAG -R ${GITHUB_REPOSITORY}
-
+        
