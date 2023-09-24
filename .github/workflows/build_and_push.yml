@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to GitHub Container Registry
+name: Build and Push
 
 env:
   IMAGE_NAME: lucarezzonico/python-demoapp
@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
     
       - name: Login to GitHub Container Registry
-        run: echo "$GH_TOKEN" | docker login ghcr.io -u $GH_USERNAME -p $GH_PASSWORD
+        run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GH_USERNAME }} -p ${{ secrets.GH_PASSWORD }}
     
       - name: Build the Docker image
         run: docker build . -f build/Dockerfile -t ghcr.io/$IMAGE_NAME:$IMAGE_TAG
