@@ -1,4 +1,4 @@
-name: Build and Push
+name: Build and Push GHCR
 
 env:
   IMAGE_NAME: lucarezzonico/python-demoapp

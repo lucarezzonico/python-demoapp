@@ -1,0 +1,32 @@
+name: Build and Push AWS ECR
+
+env:
+  IMAGE_NAME: lucarezzonico/python-demoapp
+  IMAGE_TAG: v1.0.1
+
+on:
+  push:
+    branches: [master_luca]
+  pull_request:
+    branches: [master_luca]
+
+jobs:
+  build-and-push-aws-ecr:
+    name: Build and Push Docker Image to AWS Elastic Container Registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+    
+      - name: Login to AWS Elastic Container Registry
+        run: aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 625213534728.dkr.ecr.eu-west-3.amazonaws.com
+
+      - name: Build Docker image
+        run: docker build . -f build/Dockerfile -t python-demoapp
+      
+      - name: Tag Docker image
+        run: docker tag python-demoapp:latest 625213534728.dkr.ecr.eu-west-3.amazonaws.com/python-demoapp:latest
+
+      - name: Push Docker image to AWS Elastic Container Registry
+        run: docker push 625213534728.dkr.ecr.eu-west-3.amazonaws.com/python-demoapp:latest
+        

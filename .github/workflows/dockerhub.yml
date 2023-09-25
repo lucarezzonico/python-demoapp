@@ -1,0 +1,31 @@
+name: Build and Push Dockerhub
+
+env:
+  IMAGE_NAME: lucarezzonico/python-demoapp
+  IMAGE_TAG: v1.0.1
+
+on:
+  push:
+    branches: [master_luca]
+  pull_request:
+    branches: [master_luca]
+
+jobs:
+  build-and-push-dockerhub:
+    name: Build and Push Docker Image to Dockerhub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+    
+      - name: Login to Dockerhub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build . -f build/Dockerfile -t $IMAGE_NAME:$IMAGE_TAG
+
+      - name: Push Docker image to Dockerhub
+        run: docker push $IMAGE_NAME:$IMAGE_TAG
+        
+
+        
