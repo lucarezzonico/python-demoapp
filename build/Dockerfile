@@ -2,6 +2,8 @@ FROM python:3.9-slim
 
 LABEL Name="Python Flask Demo App" Version=1.4.2
 LABEL org.opencontainers.image.source = "https://github.com/lucarezzonico/python-demoapp"
+# Link ghcr to github repo
+LABEL org.opencontainers.image.source https://github.com/lucarezzonico/python-demoapp
 
 ARG srcDir=src
 WORKDIR /app
